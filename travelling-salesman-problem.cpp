@@ -11,7 +11,11 @@ vector<struct node> ad[100] = {};
 void G(int u, int v, int w) {
     struct node temp;
     cout << "Enter weight between " << u << " and " << v << " paths : ";
+
     cin >> w;
+         		cout<< "\n__________________________________________________\n";
+				cout<< "\n__________________________________________________\n";
+
 
         temp.vertex = v;
         temp.weight = w;
@@ -34,22 +38,40 @@ void printMatrix(int n){
     // Print the matrix
     cout << "\nAdjacency Matrix Path Weight Table:\n";
     for (int i = 0; i < n; i++) {
+			cout << "|\t";
         for (int j = 0; j < n; j++) {
-            cout << matrix[i][j] << "\t\t";
+            cout <<matrix[i][j] << "\t|\t\t";
         }
+		        cout<< "\n___________________________________________________________________________________________________________________\n";
+
         cout << endl;
     }
 }
 
 int main() {
     int n, e, u, v, w;
+        cout<< "\t\t _______________________________________________________________________\n";
+        cout<< "\t\t|\t\t\t\t\t\t\t\t\t|\n";
+		cout << "\t\t|\t\t Welcome to Travelling Salesman Problem\t\t\t|\n";
+		cout<< "\t\t|_______________________________________________________________________|\n\n";
+		cout<< "__________________________________________________\n";
+		cout << "Enter number of cities : ";
+		cin >> n;
+		cout<< "__________________________________________________\n";
+        cout << "Enter number of paths : ";
+        cin >> e;
+		cout<< "__________________________________________________\n";
 
-    cout << "Enter number cities and paths : ";
-    cin >> n >> e;
 
     for (int i = 1; i <= e; i++) {
-        cout << "Enter cities between path : "  ;
-        cin >> u >> v;
+        cout << "Enter city  " << i  << " : "  ;
+
+        cin >> u;
+        	cout<< "\n__________________________________________________\n";
+         cout << "Enter city  " << i+1  << " : "  ;
+        cin >> v;
+                 		cout<< "\n__________________________________________________\n";
+
         G(u, v, w);
     }
     printMatrix(n);
