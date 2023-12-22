@@ -1,16 +1,16 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct node {
     int vertex, weight;
 };
-
+  int n, e, u, v, w;
+vector<vector<int>> matrix;  // Declare matrix as a global variable
 vector<struct node> ad[100] = {};
-
-void G(int u, int v, int w) {
+int travel = 0;
+void G() {
     struct node temp;
-    cout << "Enter weight between " << u << " and " << v << " paths : ";
+    cout << "\nEnter weight between " << u << " and " << v << " paths : ";
 
     cin >> w;
          		cout<< "\n__________________________________________________\n";
@@ -26,7 +26,6 @@ void G(int u, int v, int w) {
 }
 
 void printMatrix(int n){
-    vector<vector<int>> matrix(n, vector<int>(n, 0)); //Initialize matrix with zero
     for (int i = 1; i <= n; i++) {
         for (int j = 0; j < ad[i].size(); j++) {
             int v = ad[i][j].vertex;
@@ -48,8 +47,36 @@ void printMatrix(int n){
     }
 }
 
+int tsp(int dp[101][101]){
+
+	for(int i = 0; i < n; i++){
+		for(int j = 0 ; j < ad[i].size();j++){
+			 if(dp[i][j] != 0){
+				return dp[i][j];
+			}
+			int ans = 999999;
+			if(dp[i][j] == 0){
+					travel = tsp(dp);
+				int newans = ad[i][j].weight + travel;
+				ans  = min(newans, ans);
+				return dp[i][j] = ans;
+			}
+		}
+	}
+}
+
+void printPath(int i, int j, int dp[101][101]) {
+    while (j != 0 && i != j) {
+        cout << i << " ";
+        i = dp[i][j];
+    }
+    cout << i;
+}
+
+
 int main() {
-    int n, e, u, v, w;
+int dp[101][101];
+
         cout<< "\t\t _______________________________________________________________________\n";
         cout<< "\t\t|\t\t\t\t\t\t\t\t\t|\n";
 		cout << "\t\t|\t\t Welcome to Travelling Salesman Problem\t\t\t|\n";
@@ -61,21 +88,22 @@ int main() {
         cout << "Enter number of paths : ";
         cin >> e;
 		cout<< "__________________________________________________\n";
-
+		matrix.resize(n, vector<int>(n, 0));
+		memset(dp, -1, sizeof(dp));
 
     for (int i = 1; i <= e; i++) {
         cout << "Enter city  " << i  << " : "  ;
-
         cin >> u;
-        	cout<< "\n__________________________________________________\n";
-         cout << "Enter city  " << i+1  << " : "  ;
+        cout<< "\n";
+		cout << "Enter city  " << i+1  << " : "  ;
         cin >> v;
-                 		cout<< "\n__________________________________________________\n";
-
-        G(u, v, w);
+        G();
     }
     printMatrix(n);
-
-
+     cout << "\nMinimum Cost is: ";
+	int res = tsp(dp);
+    cout << "\n" << res;
+      cout << "\nShortest Path is: ";
+       printPath(1, n,dp); // Print the path starting from city 1
     return 0;
 }
